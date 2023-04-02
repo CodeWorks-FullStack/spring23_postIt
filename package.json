@@ -1,0 +1,16 @@
+
+  {
+    "name": "spring23_postit",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "npm run setup:server",
+      "setup:app": "npm run setup:server && npm run setup:client",
+      "setup:client": "cd spring23_postIt.client && npm i",
+      "setup:server": "cd spring23_postIt && npm i",
+      "start": "node spring23_postIt/index.js"
+    },
+    "engines": {
+      "node": "^18.12.1"
+    }
+  }
+  
