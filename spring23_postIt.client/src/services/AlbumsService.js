@@ -12,6 +12,12 @@ class AlbumsService {
     logger.log('[ALBUMS IN THE APPSTATE]', AppState.albums)
   }
 
+  async getAlbumById(albumId) {
+    const res = await api.get(`api/albums/${albumId}`)
+    logger.log('[GETTING ALBUM BY ID]', res.data)
+    AppState.album = new Album(res.data)
+  }
+
 }
 
 
