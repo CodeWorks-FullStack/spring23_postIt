@@ -16,7 +16,7 @@ class PicturesService {
     // TODO ADD FUNCTION TO VERIFY USER IS A COLLABORATOR
 
     let picture = await dbContext.Pictures.create(pictureData)
-    await picture.populate("creator")
+    await picture.populate("creator", 'picture name')
     return picture
   }
 

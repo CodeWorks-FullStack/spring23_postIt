@@ -13,19 +13,19 @@ class AlbumsService{
     return `Album: ${album.title} was successfully deleted.`
   }
   async getOne(albumId) {
-    const album = await dbContext.Albums.findById(albumId).populate("creator")
+    const album = await dbContext.Albums.findById(albumId).populate("creator", 'picture name')
     if(album == null) {
       throw new BadRequest('This album does not exist.')
     }
     return album
   }
   async getAll() {
-    const albums = await dbContext.Albums.find().populate("creator")
+    const albums = await dbContext.Albums.find().populate("creator", 'picture name')
     return albums
   }
   async create(albumData) {
     const album = await dbContext.Albums.create(albumData)
-    await album.populate("creator")
+    await album.populate("creator", 'picture name')
     return album
   }
 
