@@ -1,3 +1,4 @@
+import { Profile } from "./Account.js"
 
 export class Picture {
   constructor(data) {
@@ -5,6 +6,6 @@ export class Picture {
     this.imgUrl = data.imgUrl
     this.albumId = data.albumId
     this.creatorId = data.creatorId
-    this.creator = data.creator
+    this.creator = new Profile(data.creator)
   }
 }

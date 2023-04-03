@@ -2,7 +2,7 @@
   <div class="row AlbumDetailsPage" v-if="album.id">
     <!-- SECTION LEFT SIDE -->
     <div class="col-md-4">
-      <div class="d-flex">
+      <div class="row">
         <img class="img-fluid" :src="album.coverImg" alt="">
         <div>
           <p>{{ album.title }}</p>
@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <div class="d-flex">
+      <div class="row">
         <p># Collaborators</p>
         <button class="btn btn-info">Collab</button>
       </div>
@@ -25,7 +25,9 @@
     <div class="col-md-8">
       <div class="row">
         <!-- STUB Pictures will go here -->
-        <div class="col-md-4"></div>
+        <div class="col-md-4 card" v-for="p in pictures" :key="p.id">
+          <img class="img-fluid" :src="p.imgUrl" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -71,7 +73,8 @@ export default {
     })
 
     return {
-      album: computed(() => AppState.album)
+      album: computed(() => AppState.album),
+      pictures: computed(() => AppState.pictures),
     }
   }
 };
