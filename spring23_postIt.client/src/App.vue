@@ -4,7 +4,7 @@
   </header>
 
 
-  <main class="container-fluid">
+  <main class="container-fluid hero-bg">
     <router-view />
   </main>
   <!-- <footer class="bg-dark text-light">
@@ -44,10 +44,10 @@ export default {
   --main-height: calc(100vh - 32px - 64px);
 }
 
-
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
+.hero-bg {
+  background-image: url('../src/assets/img/Home\ Page\ 1.png');
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
 }
 </style>
