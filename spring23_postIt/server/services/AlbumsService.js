@@ -28,7 +28,9 @@ class AlbumsService{
   }
   async getAll() {
     // NOTE                     PICK WHICH VALUES YOU WANT TO RETURN   vvvvvvvvvv
-    const albums = await dbContext.Albums.find().populate("creator", 'picture name')
+    const albums = await dbContext.Albums.find()
+    .populate("creator", 'picture name')
+    .populate("memberCount")
     // TODO MAKE SURE ALBUM ISN'T ARCHIVED, IF IS, THROW BAD REQUEST
     return albums
   }
@@ -37,6 +39,16 @@ class AlbumsService{
     // NOTE MAKE SURE YOU'RE AWAITING YOUR POPULATE ON CREATES
     await album.populate("creator", 'picture name')
     return album
+  }
+
+  // SECTION ACCOUNT ALBUMS
+  async getAlbumsImCollaboratedOn(accountId) {
+    let albums = await dbContext.Collaborators.find({accountId})
+    .populate({path: "album",
+        populate: {
+        path: "creator memberCount"
+    }})
+    return albums
   }
 
 }
