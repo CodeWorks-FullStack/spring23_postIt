@@ -39,7 +39,7 @@ class CollaboratorsService{
     let collaborator = await dbContext.Collaborators.create(collaboratorData)
     await collaborator.populate({path: "album",
     populate: {
-    path: "creator"
+    path: "creator, memberCount"
       }})
     await collaborator.populate("profile")
     return collaborator
