@@ -10,6 +10,9 @@ class AlbumsService{
     if(album.creatorId != userId) {
       throw new Forbidden(`You do not have permission to archive Album ${album.title}.`)
     }
+    if(album.archived == true) {
+      throw new Forbidden(`Album: ${album.title} has already been archived.`)
+    }
     // NOTE MAKE SURE TO FLIP THE BOOLEAN, THEN AWAIT AND SAVE ALBUMS IN YOUR DATABASE
     album.archived = true
     await album.save()
