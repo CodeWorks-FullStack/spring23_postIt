@@ -40,7 +40,7 @@ class CollaboratorsService{
     await collaborator.populate({path: "album",
     populate: {
     path: "creator"
-}})
+      }})
     await collaborator.populate("profile")
     return collaborator
   }
