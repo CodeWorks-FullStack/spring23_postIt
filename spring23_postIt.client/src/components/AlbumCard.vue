@@ -10,7 +10,7 @@
       </div>
 
       <div>
-        <p>Collabs <span>❤</span> </p>
+        <p> {{ album.memberCount }} <span>❤</span> </p>
       </div>
     </div>
   </router-link>

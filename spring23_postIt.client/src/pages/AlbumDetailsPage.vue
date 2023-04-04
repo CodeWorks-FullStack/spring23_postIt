@@ -15,7 +15,10 @@
 
         <div class="row">
           <p># Collaborators</p>
-          <button class="btn btn-info" :disabled="album.archived">Collab</button>
+          <button class="btn btn-info" :disabled="album.archived" @click="createCollab()">Collab</button>
+
+          <button class="btn btn-danger" @click="removeCollab(isCollab.collaboratorId)">UnCollab</button>
+
         </div>
       </div>
 
@@ -23,8 +26,11 @@
         <h1 class="text-danger">ALBUM HAS BEEN ARCHIVED</h1>
       </div>
 
-      <div>
-        <!-- STUB collab images will go here -->
+      <div class="row">
+        <div class="col-md-2" v-for="m in albumMembers" :key="m.id">
+          <img class="img-fluid rounded-circle" :src="m.picture" alt="">
+          <p>{{ m.name }}</p>
+        </div>
       </div>
     </div>
 
@@ -40,7 +46,7 @@
   </div>
 
 
-  <Modal id="pictureModal">
+  <Modal id="pictureModal" class="bg-primary">
     <template #header>
       <div>Create Picture</div>
     </template>
@@ -60,6 +66,8 @@ import Pop from '../utils/Pop.js';
 import { useRoute } from 'vue-router';
 import { albumsService } from '../services/AlbumsService.js';
 import { picturesService } from '../services/PicturesService.js'
+import { albumMembersService } from '../services/AlbumMembersService.js'
+
 export default {
   setup() {
     const route = useRoute()
@@ -86,14 +94,52 @@ export default {
       }
     }
 
+    async function getAlbumMembers() {
+      try {
+        const albumId = route.params.albumId
+        await albumMembersService.getAlbumMembers(albumId)
+      } catch (error) {
+        console.error(error)
+        // @ts-ignore 
+        Pop.error(('[ERROR]'), error.message)
+      }
+    }
+
     onMounted(() => {
       getAlbumById()
       getPicturesByAlbum()
+      getAlbumMembers()
     })
 
     return {
       album: computed(() => AppState.album),
       pictures: computed(() => AppState.pictures),
+      albumMembers: computed(() => AppState.albumMembers),
+
+      isCollab: computed(() => AppState.albumMembers.find(c => c.id == AppState.account.id)),
+
+      async createCollab() {
+        try {
+          await albumMembersService.createCollab({ albumId: route.params.albumId })
+        } catch (error) {
+          console.error(error)
+          // @ts-ignore 
+          Pop.error(('[ERROR]'), error.message)
+        }
+      },
+
+      async removeCollab(collaboratorId) {
+        try {
+          if (await Pop.confirm('Are you sure you want to stop collaborating?')) {
+            await albumMembersService.removeCollab(collaboratorId)
+          }
+        } catch (error) {
+          console.error(error)
+          // @ts-ignore 
+          Pop.error(('[ERROR]'), error.message)
+        }
+      }
+
     }
   }
 };
