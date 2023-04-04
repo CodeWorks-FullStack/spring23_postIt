@@ -1,7 +1,7 @@
 <template>
   <!-- SECTION MY ALBUMS or ALBUMS THAT I COLLAB ON -->
-  <div class="row">
-    <div class="col-md-10">
+  <div class="row justify-content-center">
+    <div class="col-md-10" v-if="account.id && myAlbums.length">
       <h1>My Albums</h1>
       <div class="row">
         <div class="col-md-4" v-for="m in myAlbums" :key="m.id">
@@ -66,6 +66,7 @@ export default {
       categories,
 
       myAlbums: computed(() => AppState.myAlbums),
+      account: computed(() => AppState.account),
 
       albums: computed(() => {
         if (!filterCategory.value) {
