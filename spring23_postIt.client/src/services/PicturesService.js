@@ -12,6 +12,12 @@ class PicturesService {
     AppState.pictures = res.data.map(p => new Picture(p))
     logger.log('[PICTURES IN THE APPSTATE]', AppState.pictures)
   }
+
+  async createPicture(pictureData) {
+    const res = await api.post('api/pictures', pictureData)
+    // logger.log('[CREATING A PICTURE]', res.data)
+    AppState.pictures.push(new Picture(res.data))
+  }
 }
 
 

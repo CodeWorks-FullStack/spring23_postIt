@@ -21,7 +21,14 @@ class AlbumsService {
   async createAlbum(albumData) {
     const res = await api.post('api/albums', albumData)
     console.log('[CREATING AN ALBUM]', res.data);
-    AppState.albums.push(res.data)
+    AppState.albums.push(new Album(res.data))
+  }
+
+  async archiveAlbum() {
+    const albumId = AppState.album.id
+    const res = await api.delete(`api/albums/${albumId}`)
+    logger.log('[DELETING AN ALBUM]', res.data)
+    AppState.album.archived = true
   }
 
 }

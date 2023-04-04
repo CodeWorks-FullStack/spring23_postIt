@@ -9,11 +9,15 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+
+          <!-- SECTION MODAL HEADER -->
           <h1 class="modal-title fs-5" id="exampleModalLabel">
             <slot name="header"></slot>
           </h1>
+
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <!-- SECTION MODAL BODY -->
         <div class="modal-body">
           <slot name="bigBody"></slot>
         </div>
