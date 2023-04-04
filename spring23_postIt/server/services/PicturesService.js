@@ -4,6 +4,7 @@ import { albumsService } from "./AlbumsService"
 
 class PicturesService {
   async getAll(albumId) {
+    // NOTE GO AND FIND ALL THE PICTURES WHERE THEIR albumId EQUALS THE albumId THAT IS BEING PASSED THROUGH THE PARAMETERS
     const pictures = await dbContext.Pictures.find({albumId}).populate("creator", 'picture name')
     return pictures
   }

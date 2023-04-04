@@ -18,7 +18,7 @@ export class AlbumsController extends BaseController{
   // CREATE
   async create(req, res, next) {
     try {
-      // let userId = req.userInfo.id
+      // NOTE ALIASED OUT INTO albumData TO CREATE ONE OBJECT TO SEND TO SERVICES
       let albumData = req.body
       albumData.creatorId = req.userInfo.id
       let album = await albumsService.create(albumData)
@@ -63,6 +63,7 @@ export class AlbumsController extends BaseController{
 
   // SECTION PICTURES
 
+  // GET ALL PICTURES
   async getPictures(req, res, next) {
     try {
       let albumId = req.params.id
