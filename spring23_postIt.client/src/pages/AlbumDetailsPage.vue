@@ -2,18 +2,25 @@
   <div class="row AlbumDetailsPage" v-if="album.id">
     <!-- SECTION LEFT SIDE -->
     <div class="col-md-4">
-      <div class="row">
-        <img class="img-fluid" :src="album.coverImg" alt="">
-        <div>
-          <p>{{ album.title }}</p>
-          <p>{{ album.creator?.name }}</p>
-          <button class="btn btn-success">Add Picture</button>
+      <div>
+        <div class="row">
+          <img class="img-fluid" :src="album.coverImg" alt="">
+          <div>
+            <p>{{ album.title }}</p>
+            <p>{{ album.creator?.name }}</p>
+            <button class="btn btn-success" data-bs-target="#pictureModal" data-bs-toggle="modal"
+              :disabled="album.archived">Add Picture</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <p># Collaborators</p>
+          <button class="btn btn-info" :disabled="album.archived">Collab</button>
         </div>
       </div>
 
-      <div class="row">
-        <p># Collaborators</p>
-        <button class="btn btn-info">Collab</button>
+      <div v-if="album.archived">
+        <h1 class="text-danger">ALBUM HAS BEEN ARCHIVED</h1>
       </div>
 
       <div>
@@ -31,6 +38,18 @@
       </div>
     </div>
   </div>
+
+
+  <Modal id="pictureModal">
+    <template #header>
+      <div>Create Picture</div>
+    </template>
+
+    <template #bigBody>
+      <PictureForm />
+    </template>
+
+  </Modal>
 </template>
 
 
