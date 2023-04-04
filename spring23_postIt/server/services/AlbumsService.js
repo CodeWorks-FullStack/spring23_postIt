@@ -18,6 +18,8 @@ class AlbumsService{
     await album.save()
     return `Album: ${album.title} was successfully deleted.`
   }
+
+  // GETTING ALBUM BY ID
   async getOne(albumId) {
     const album = await dbContext.Albums.findById(albumId).populate("creator", 'picture name')
     // TODO MAKE SURE ALBUM ISN'T ARCHIVED, IF IS, THROW BAD REQUEST
@@ -26,14 +28,17 @@ class AlbumsService{
     }
     return album
   }
+
+  // GETTING ALL ALBUMS
   async getAll() {
-    // NOTE                     PICK WHICH VALUES YOU WANT TO RETURN   vvvvvvvvvv
     const albums = await dbContext.Albums.find()
+    // NOTE RETRIEVE AND POPULATE THE "picture" and "name" FIELDS OF THE "creator"
     .populate("creator", 'picture name')
     .populate("memberCount")
-    // TODO MAKE SURE ALBUM ISN'T ARCHIVED, IF IS, THROW BAD REQUEST
     return albums
   }
+
+  // CREATE ALBUM
   async create(albumData) {
     const album = await dbContext.Albums.create(albumData)
     // NOTE MAKE SURE YOU'RE AWAITING YOUR POPULATE ON CREATES
@@ -42,8 +47,12 @@ class AlbumsService{
   }
 
   // SECTION ACCOUNT ALBUMS
+
+  // GET ALL ALBUMS THAT I'M COLLABORATING ON
   async getAlbumsImCollaboratedOn(accountId) {
     let albums = await dbContext.Collaborators.find({accountId})
+    // NOTE WE'RE CALLING TO OUR "album" VIRTUAL
+    // NOTE THEN WE'RE TARGETING THAT SPECIFC ALBUM, AND POPULATING IT'S VIRTUALS ON TO THE ORIGINAL "album" VIRTUAL
     .populate({path: "album",
         populate: {
         path: "creator memberCount"
