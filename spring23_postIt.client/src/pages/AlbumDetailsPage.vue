@@ -8,16 +8,19 @@
           <div>
             <p>{{ album.title }}</p>
             <p>{{ album.creator?.name }}</p>
-            <button class="btn btn-success" data-bs-target="#pictureModal" data-bs-toggle="modal"
+            <button v-if="isCollab" class="btn btn-success" data-bs-target="#pictureModal" data-bs-toggle="modal"
               :disabled="album.archived">Add Picture</button>
           </div>
         </div>
 
         <div class="row">
-          <p># Collaborators</p>
-          <button class="btn btn-info" :disabled="album.archived" @click="createCollab()">Collab</button>
+          <p>{{ albumMembers.length }}</p>
 
-          <button class="btn btn-danger" @click="removeCollab(isCollab.collaboratorId)">UnCollab</button>
+          <button v-if="!isCollab && account.id" class="btn btn-info" :disabled="album.archived"
+            @click="createCollab()">Collab</button>
+
+          <button v-else-if="account.id" class="btn btn-danger"
+            @click="removeCollab(isCollab.collaboratorId)">UnCollab</button>
 
         </div>
       </div>
@@ -115,6 +118,7 @@ export default {
       album: computed(() => AppState.album),
       pictures: computed(() => AppState.pictures),
       albumMembers: computed(() => AppState.albumMembers),
+      account: computed(() => AppState.account),
 
       isCollab: computed(() => AppState.albumMembers.find(c => c.id == AppState.account.id)),
 

@@ -2,6 +2,7 @@ import { AppState } from "../AppState.js"
 import { CollabAlbum } from "../models/Album.js"
 import { AlbumMember } from "../models/AlbumMember.js"
 import { logger } from "../utils/Logger.js"
+import Pop from "../utils/Pop.js"
 import { api } from "./AxiosService.js"
 
 class AlbumMembersService {
@@ -34,7 +35,18 @@ class AlbumMembersService {
     if (myAlbumIndex !== -1) {
       AppState.myAlbums.splice(myAlbumIndex, 1)
     }
+  }
 
+  async getMyCollabAlbums() {
+    try {
+      const res = await api.get('account/collaborators')
+      logger.log('[GETTING MY COLLAB ALBUMS]', res.data)
+      AppState.myAlbums = res.data.map(a => new CollabAlbum(a))
+    } catch (error) {
+      console.error(error)
+      // @ts-ignore 
+      Pop.error(('[ERROR]'), error.message)
+    }
   }
 
 }

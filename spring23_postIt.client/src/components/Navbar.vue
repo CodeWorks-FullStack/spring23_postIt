@@ -18,7 +18,8 @@
           </router-link> -->
 
           <!-- NOTE import button from modal -->
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#albumModal"> Create
+          <button v-if="account.id" type="button" class="btn btn-success" data-bs-toggle="modal"
+            data-bs-target="#albumModal"> Create
             Album</button>
 
           <button v-if="route.name == 'AlbumDetails' && album.creatorId == account.id" :disabled="album.archived"

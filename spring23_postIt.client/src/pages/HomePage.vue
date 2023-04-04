@@ -1,7 +1,14 @@
 <template>
   <!-- SECTION MY ALBUMS or ALBUMS THAT I COLLAB ON -->
   <div class="row">
-    <p>My Albums</p>
+    <div class="col-md-10">
+      <h1>My Albums</h1>
+      <div class="row">
+        <div class="col-md-4" v-for="m in myAlbums" :key="m.id">
+          <AlbumCard :album="m" />
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION FILTER BAR-->
@@ -57,6 +64,8 @@ export default {
 
     return {
       categories,
+
+      myAlbums: computed(() => AppState.myAlbums),
 
       albums: computed(() => {
         if (!filterCategory.value) {
