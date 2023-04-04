@@ -18,6 +18,12 @@ class AlbumsService {
     AppState.album = new Album(res.data)
   }
 
+  async createAlbum(albumData) {
+    const res = await api.post('api/albums', albumData)
+    console.log('[CREATING AN ALBUM]', res.data);
+    AppState.albums.push(res.data)
+  }
+
 }
 
 
