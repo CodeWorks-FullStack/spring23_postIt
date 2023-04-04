@@ -20,7 +20,7 @@ class AlbumsService{
     album.archived = true
     await album.save()
 
-    return `Album: ${album.title} was successfully deleted.`
+    return `Album: ${album.title} was successfully archived.`
   }
 
   // GETTING ALBUM BY ID

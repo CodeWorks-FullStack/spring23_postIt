@@ -31,9 +31,11 @@ class CollaboratorsService{
   // CREATE COLLABORATORS
   async create(collaboratorData) {
     const album = await albumsService.getOne(collaboratorData.albumId)
+
     if(album.archived == true) {
       throw new BadRequest(`Sorry, something went wrong.`)
     }
+
     let collaborator = await dbContext.Collaborators.create(collaboratorData)
     await collaborator.populate("album")
     await collaborator.populate("profile")
